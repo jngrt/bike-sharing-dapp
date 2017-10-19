@@ -1,0 +1,32 @@
+[
+  {
+    "id": 0,
+    "name": "Frieda",
+    "picture": "images/bike1.jpg"
+  },
+  {
+    "id": 1,
+    "name": "Gina",
+    "picture": "images/bike2.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Collins",
+    "picture": "images/bike3.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Melissa",
+    "picture": "images/bike4.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Jeanine",
+    "picture": "images/bike5.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Elvia",
+    "picture": "images/bike6.jpg"
+  }
+]

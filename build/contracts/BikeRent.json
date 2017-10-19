@@ -1,0 +1,65 @@
+{
+  "contract_name": "BikeRent",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "bikeId",
+          "type": "uint256"
+        }
+      ],
+      "name": "rent",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "getRenters",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address[6]"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "renters",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    }
+  ],
+  "unlinked_binary": "0x6060604052341561000f57600080fd5b5b6102d98061001f6000396000f30060606040526000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680637456be7d146100545780638d5f18c81461008b578063dcc3974b146100dd575b600080fd5b341561005f57600080fd5b6100756004808035906020019091905050610140565b6040518082815260200191505060405180910390f35b341561009657600080fd5b61009e6101b7565b6040518082600660200280838360005b838110156100ca5780820151818401525b6020810190506100ae565b5050505090500191505060405180910390f35b34156100e857600080fd5b6100fe6004808035906020019091905050610239565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6000808210158015610153575060058211155b151561015e57600080fd5b3360008360068110151561016e57fe5b0160005b6101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055508190505b919050565b6101bf61026f565b600060068060200260405190810160405280929190826006801561022e576020028201915b8160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190600101908083116101e4575b505050505090505b90565b60008160068110151561024857fe5b0160005b915054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b60c0604051908101604052806006905b600073ffffffffffffffffffffffffffffffffffffffff1681526020019060019003908161027f57905050905600a165627a7a72305820e6d09dded89ddc0745610595c12a3422c2b31dc0194a7e2ec99bd212ddd47ea80029",
+  "networks": {
+    "3": {
+      "events": {},
+      "links": {},
+      "address": "0xaea5548de0da0eff47b1979f715cabfbd9d15f07",
+      "updated_at": 1508426746206
+    }
+  },
+  "schema_version": "0.0.5",
+  "updated_at": 1508426746206
+}
