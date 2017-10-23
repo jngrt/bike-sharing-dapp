@@ -29,7 +29,7 @@ contract BikeRent {
   }
 
   // Renting a bike
-  function rent(uint bikeId) public returns (uint) {
+  function rent(uint bikeId) payable returns (uint) {
     //if invalid bikeId return the eth
     require(bikeId >= 0 && bikeId <= 6);
 
