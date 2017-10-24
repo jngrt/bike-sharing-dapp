@@ -1,9 +1,49 @@
 pragma solidity ^0.4.17;
 
-import 'MultipleOwners.sol';
-import 'NewBikeAuction.sol';
+//import 'MultipleOwners.sol';
+//import 'NewBikeAuction.sol';
 
-contract BikeRent is MultipleOwners, mortal {
+contract MultipleOwners {
+
+    mapping(address => bool) public isOwner;
+
+    function MultipleOwners() public {
+        isOwner[msg.sender] = true;
+    }
+    function addOwner(address newOwner) public onlyOwners {
+      isOwner[newOwner] = true;
+    }
+
+    modifier onlyOwners {
+        require(isOwner[msg.sender]);
+        _;
+    }
+}
+
+contract NewBikeAuction {
+
+  uint public balance;
+  address public testAddress;
+
+  function NewBikeAuction(address _testAddress) public  {
+    testAddress = _testAddress;
+    balance = msg.value;
+  }
+
+  function kill() public {
+    require(testAddress == msg.sender);
+
+    selfdestruct(msg.sender);
+  }
+  
+  function getBalance() public view returns (uint) {
+    return balance;
+  }
+
+}
+
+
+contract BikeRent is MultipleOwners {
 
   address[6] public renters;
   BikeShop[] public bikeshops;
@@ -79,7 +119,8 @@ contract BikeRent is MultipleOwners, mortal {
   function checkFunds() private {
     if( balance >= bikePrice ){
       //NewBikeAuction
-      NewBikeAuction nba = NewBikeAuction.call.value(bikePrice)('NewBikeAuction',owners);
+      //NewBikeAuction nba = NewBikeAuction.call.value(bikePrice)('NewBikeAuction',owners);
+      NewBikeAuction nba = NewBikeAuction(msg.sender);
       auctions.push(nba);
     }
   }

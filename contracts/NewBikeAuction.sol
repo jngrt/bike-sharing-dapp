@@ -5,7 +5,7 @@ contract NewBikeAuction {
   uint public balance;
   address public testAddress;
 
-  function NewBikeAuction(address _testAddress) public payable {
+  function NewBikeAuction(address _testAddress) public  {
     testAddress = _testAddress;
     balance = msg.value;
   }
