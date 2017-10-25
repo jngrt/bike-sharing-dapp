@@ -1,46 +1,8 @@
 pragma solidity ^0.4.17;
 
-//import 'MultipleOwners.sol';
-//import 'NewBikeAuction.sol';
+import './NewBikeAuction.sol';
+import './MultipleOwners.sol';
 
-contract MultipleOwners {
-
-    mapping(address => bool) public isOwner;
-
-    function MultipleOwners() public {
-        isOwner[msg.sender] = true;
-    }
-    function addOwner(address newOwner) public onlyOwners {
-      isOwner[newOwner] = true;
-    }
-
-    modifier onlyOwners {
-        require(isOwner[msg.sender]);
-        _;
-    }
-}
-
-contract NewBikeAuction {
-
-  uint public balance;
-  address public testAddress;
-
-  function NewBikeAuction(address _testAddress) public  {
-    testAddress = _testAddress;
-    balance = msg.value;
-  }
-
-  function kill() public {
-    require(testAddress == msg.sender);
-
-    selfdestruct(msg.sender);
-  }
-  
-  function getBalance() public view returns (uint) {
-    return balance;
-  }
-
-}
 
 
 contract BikeRent is MultipleOwners {
@@ -51,17 +13,12 @@ contract BikeRent is MultipleOwners {
   Bike[] public bikes;
   uint public price = 500 finney;
   uint public bikePrice = 1 ether;
-  uint private balance;
   NewBikeAuction[] auctions;
 
   modifier onlyBikeShops {
       require(isBikeShop[msg.sender]);
       _;
   }
-
-  //TODO: list of all bikes
-  //probably list of addresses.. how should bikes be identified
-
 
 
   //TODO: keep track of rentals
@@ -85,14 +42,7 @@ contract BikeRent is MultipleOwners {
       int32 long;
   }
 
-  function BikeRent( uint priceInFinney ) public {
-      price = priceInFinney * 1 finney;
-  }
 
-  //kill should be added automatically by remix?..
-  function kill() public onlyOwners {
-    selfdestruct(msg.sender);
-  }
 
   // Renting a bike
   function rent(uint bikeId) public payable returns (uint) {
@@ -101,11 +51,6 @@ contract BikeRent is MultipleOwners {
 
     // if not enough paid: return the eth
     require(msg.value >= price );
-
-    // update our running total
-    // should not be necessary, SC should have balance already
-    // http://solidity.readthedocs.io/en/latest/types.html?highlight=send%20ether#members-of-addresses
-    //balance += msg.value;
 
     // register the bike rented
     renters[bikeId] = msg.sender;
@@ -117,21 +62,40 @@ contract BikeRent is MultipleOwners {
   }
 
   function checkFunds() private {
-    if( balance >= bikePrice ){
-      //NewBikeAuction
-      //NewBikeAuction nba = NewBikeAuction.call.value(bikePrice)('NewBikeAuction',owners);
-      NewBikeAuction nba = NewBikeAuction(msg.sender);
+    if( this.balance >= bikePrice ){
+      
+      NewBikeAuction nba = new NewBikeAuction();
+      nba.setValue.value(bikePrice)();
       auctions.push(nba);
     }
   }
+  function collectAuction(uint index) public {
+      //NewBikeAuction auction = auctions[index];
+      
+      //auction.collect.gas(80000)(msg.sender);
+      //auction.collect(msg.sender);
+      (auctions[index]).collect(msg.sender);
+  }
+  
 
   function getAuctions() public view returns( NewBikeAuction[] ){
     return auctions;
   }
+  function setAuctionValue(uint index) payable public returns (uint) {
+      return (auctions[index]).setValue.value(msg.value)();
+      //return msg.value;
+  }
+  function getAuctionBalance( uint auctionIndex) public view returns ( uint ){
+      return (auctions[auctionIndex]).getBalance();
+  }
+
 
   // Retrieving the adopters
   function getRenters() public view returns (address[6]) {
     return renters;
+  }
+  function getBalance() public view returns (uint) {
+      return this.balance;
   }
 
   // Retrieving the bikeshops

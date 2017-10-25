@@ -1,6 +1,6 @@
 pragma solidity ^0.4.17;
 
-contract OwnedMultiple {
+contract MultipleOwners {
 
     mapping(address => bool) public isOwner;
 
