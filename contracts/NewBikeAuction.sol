@@ -1,23 +1,27 @@
 pragma solidity ^0.4.17;
 
+
 contract NewBikeAuction {
 
-  uint public balance;
-  address public testAddress;
-
-  function NewBikeAuction(address _testAddress) public  {
-    testAddress = _testAddress;
-    balance = msg.value;
-  }
-
-  function kill() public {
-    require(testAddress == msg.sender);
-
-    selfdestruct(msg.sender);
-  }
+   event LogTest(string test);
+   event LogAddress(address a);
+   event LogUint(uint u);
+  
+ 
+   function setValue() payable public returns (uint){
+       LogUint(this.balance);
+       return msg.value;
+   }
   
   function getBalance() public view returns (uint) {
-    return balance;
+    return this.balance;
   }
-
+  function collect( address winner ) public {
+      LogTest('collect');
+      selfdestruct( winner );
+  }
+  function getTest() public returns (uint) {
+      LogTest('testing');
+      return 777;
+  }
 }
